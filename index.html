@@ -1,0 +1,165 @@
+<style>
+        .widthOfPdfTableRow {
+          width: 15% !important;
+        }
+        .table.table-striped {
+          width: 100%;
+          margin: 0 auto;
+        }
+        .pdfBody {
+          margin: 0 auto;
+          color: black;
+          display: block;
+          padding: 20px;
+          font-family: 'OpenSansRegular',sans-serif;
+          height: auto !important;
+          /*height: auto !important;*/
+          position: absolute !important;
+          /*left: -9999px !important;*/
+        }
+        .background {
+            background: #FAEBD7;
+            border-radius: 5px;
+        }
+ </style>
+<div #htmlToPdf id="htmlToPdf" class="pdfBody">
+        <div class="table table-striped">
+          <small style="color: lightgray">Partner</small>
+          <h2 style="color: #17375e">Project Package for Project `One Project`</h2>
+        </div>
+        <div class="container-fluid" style="margin-top: 30px !important;">
+          <div class="table table-striped">
+            <div class="table-striped">
+              <!--<span style="color: #17375e"><b>Project Name</b>: {{ (rfpForPdf || {}).title }}</span>-->
+              <span style="color: #17375e"><b>Project Name: </b>First Project</span>
+            </div>
+            <div class="table-striped" style="margin-top: 10px;">
+              <!--<span style="color: #17375e"><b>Project Description</b>: {{ (rfpForPdf || {}).description }}</span>-->
+              <span style="color: #17375e"><b>Project Description: </b>Nothing special here just for starting new projects...</span>
+            </div>
+          <!--<small style="color: #ADD8E6;">Partner Project</small>-->
+          </div>
+      
+          <div class="table-striped">
+            <h4 style="color: #17375e"><b>Other Project Details</b></h4>
+          </div>
+          <table class="table table-striped background" style="background: #f0f8ff;" ><br />
+            <tbody>
+            <tr>
+              <td class="widthOfPdfTableRow"><b>Location: </b></td>
+              <td class="widthOfPdfTableRow">Chandigarh</td>
+              <td style="width: 5%;"><b>approximate Value: </b></td>
+              <td class="widthOfPdfTableRow">$12110</td>
+            </tr>
+            <tr>
+              <td class="widthOfPdfTableRow"><b>order: </b></td>
+              <td class="widthOfPdfTableRow">4</td>
+              <td class="widthOfPdfTableRow">Evaluation Process: </td>
+              <td class="widthOfPdfTableRow">nothing specails</td>
+            </tr>
+            <tr>
+              <td class="widthOfPdfTableRow"><b>Created Date: </b></td>
+              <td class="widthOfPdfTableRow">Sep 19 2018</td>
+              <td class="widthOfPdfTableRow"><b>Created Time: </b></td>
+              <td class="widthOfPdfTableRow">Nothing special</td>
+            </tr>
+            <tr>
+              <td class="widthOfPdfTableRow"><b>Closing Date: </b></td>
+              <td class="widthOfPdfTableRow">Sep 19 2018</td>
+              <td class="widthOfPdfTableRow"><b>Closing Time: </b></td>
+              <td class="widthOfPdfTableRow">Nothing special</td>
+            </tr>
+            <tr>
+              <td class="widthOfPdfTableRow"><b>Allow Alternative Works: </b></td>
+              <td class="widthOfPdfTableRow"> No </td>
+              <td class="widthOfPdfTableRow">Allow Omissions: </td>
+              <td class="widthOfPdfTableRow"> Yes </td>
+            </tr>
+      
+            <tr>
+              <td class="widthOfPdfTableRow"><b>Anticipated Completion Date: </b></td>
+              <td class="widthOfPdfTableRow">rfpService.convertDateAndTime((((rfpForPdf || {}) || {}).anticipatedCompletionDate || {}).iso || '').date </td>
+              <td class="widthOfPdfTableRow"><b>Anticipated Completion Time: </b></td>
+              <td class="widthOfPdfTableRow"> rfpService.convertDateAndTime((((rfpForPdf || {}) || {}).anticipatedCompletionDate || {}).iso || '').time </td>
+            </tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="table table-striped" style="margin-top: 20px;">
+          <i><b style="font-weight: bolder">Note:</b><span>Important notes regarding project.</span></i>
+        </div>
+      
+      <!-- bidder details --><br /><br />
+        <div class="panel-body table-responsive" *ngIf="!closingTime && BIDs.length">
+          <div class="table-striped">
+            <h4 style="color: #17375e"><b>Project Bidder</b></h4>
+          </div>
+          <table *ngIf="!closingTime && BIDs.length" class="table table-striped" [mfData]="BIDs" #mf="mfDataTable">
+            <thead class="thead-inverse">
+            <tr>
+              <th>
+                <!-- <mfDefaultSorter by="companyName">Company Name</mfDefaultSorter> -->
+                Bidder Name
+              </th>
+              <th>
+                <!-- <mfDefaultSorter by="companyName">Company Name</mfDefaultSorter> -->
+                Company Name
+              </th>
+              <th>
+                <!-- <mfDefaultSorter by="price">Bid Amount</mfDefaultSorter> -->
+                Bid Amount
+              </th>
+              <th>
+                <!-- <mfDefaultSorter by="date">Submitted Date</mfDefaultSorter> -->
+                Submitted Date
+              </th>
+              <th>Company status</th>
+            </tr>
+            </thead>
+            <tbody >
+            <tr *ngFor="let item of mf.data">
+              <td>{{ item.createdBy?.fullName }}</td>
+              <td>{{ item.createdBy?.company?.companyName }}</td>
+              <td>
+                <!--<span *ngIf="!isRFPOpen(item.rfp)">-->
+                <!--{{ '$' + (item.step2?.price | number: '1.0-2') }}-->
+                <!--</span>-->
+                <span >
+                    {{ '$' + (item.step2?.price | number: '1.0-2') }}
+                  </span>
+              </td>
+              <td>{{ (item.placeTime?.iso || item.createdAt) | date: 'dd/MM/yyyy' }}</td>
+              <td>{{ isAwarded(item.objectId) }}</td>
+            </tr>
+            </tbody>
+            <tfoot>
+            <!--<tr>-->
+              <!--<td colspan="5">-->
+                <!--<mfBootstrapPaginator [rowsOnPageSet]="[5,10,25]"></mfBootstrapPaginator>-->
+              <!--</td>-->
+            <!--</tr>-->
+            </tfoot>
+          </table>
+        </div>
+        <div class="center-block" *ngIf="closingTime">
+          <div class="row text-center">
+                  <span>
+                      Bid details only can accessible after closing.
+                  </span>
+          </div>
+        </div>
+        <div class="center-block" *ngIf="!closingTime && !BIDs.length">
+          <div class="row text-center">
+                  <span>
+                      Bids not available.
+                  </span>
+          </div>
+        </div>
+      
+      
+      
+        <div class="table table-striped">
+            <i><b style="font-weight: bolder"> Project Partner 2018</b></i>
+        </div>
+      
+        </div>
