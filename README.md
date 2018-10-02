@@ -22,5 +22,5 @@ Set environment variable `port` for your server.
 Just use `export port=3002`. To verify varialbe is set of not, just run the command: `echo ${port}`.
 
 **This is all you need to deploy this demo `Convert html 2 pdf with Node JS` application.**
-_If anyone wants any further instruction can contact me through email._
+_If anyone wants any further instruction can contact me through email._ <br />
 **_Thank you_**
